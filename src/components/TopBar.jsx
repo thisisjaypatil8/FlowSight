@@ -5,7 +5,7 @@ const TopBar = ({ fileName, viewMode, setViewMode, onSettingsClick }) => (
   <div className="w-full max-w-6xl flex flex-wrap justify-between items-center mb-6 bg-white dark:bg-slate-800 p-3 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700">
     <div className="flex items-center space-x-2 mb-2 sm:mb-0">
       <FileText className="w-5 h-5 text-indigo-600" />
-      <h1 className="font-bold text-lg mr-4">FocusReader</h1>
+      <h1 className="font-bold text-lg mr-4">Flow Sight</h1>
       {fileName && (
         <span className="text-xs font-medium px-2 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-md truncate max-w-[150px]">
           {fileName}

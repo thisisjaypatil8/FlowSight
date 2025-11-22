@@ -1,16 +1,121 @@
-# React + Vite
+# **Flowsight — Advanced PDF Speed Reader**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+link of the website: [https://flowsight.app](https://flow-sight-kappa.vercel.app/)
 
-Currently, two official plugins are available:
+Flowsight is a modern, React-based web application built to improve reading speed and comprehension using **RSVP (Rapid Serial Visual Presentation)** and **Guided Reading techniques**.  
+It processes PDF files completely **client-side**, providing a distraction-free reading experience designed for speed and cognitive efficiency.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🌟 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🚀 Dual Reading Modes
+- **RSVP Mode** – Displays words one at a time in a fixed location to eliminate eye movement (saccades).
+- **Original / Highlight Mode** – Renders the original PDF layout and guides reading with a moving word-level highlight.
 
-## Expanding the ESLint configuration
+### 📄 PDF Parsing  
+Built on **PDF.js**, enabling secure in-browser PDF rendering and text extraction.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### ⚙️ Customizable Controls
+- Adjustable **WPM (100–1000+)**
+- Configurable **word chunk size (1–5 words)** for RSVP mode
+- **Zoom controls** for PDF view
+
+### 🔁 Smart Auto-Scroll  
+Automatically scrolls the PDF to keep the active line centered.
+
+### 📱 Responsive Design  
+Optimized for desktop, tablets, and mobile devices.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|------|------------|
+| Frontend | React (Vite) |
+| Styling | Tailwind CSS |
+| PDF Engine | PDF.js |
+| Icons | Lucide React |
+| State Logic | React Hooks |
+
+---
+
+## 🚀 Getting Started
+
+### **Prerequisites**
+- Node.js (v16 or higher)
+- npm (comes with Node.js)
+
+### **Installation**
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/flowsight.git
+cd flowsight
+
+# Install dependencies
+npm install
+
+# Fix Tailwind version mismatch (if any)
+npm install -D tailwindcss@3.4.17
+
+# Run the app
+npm run dev
+```
+## 📂 Project Structure
+```text
+src/
+├── components/         # UI Components
+│   ├── ControlBar.jsx  # Play/Pause, Seek, WPM controls
+│   ├── PDFDisplay.jsx  # Canvas rendering & Highlighter logic
+│   ├── RSVPDisplay.jsx # The center-screen flashing word box
+│   └── TopBar.jsx      # Navigation and Mode switching
+├── hooks/              # Custom Logic Hooks
+│   ├── usePdfLoader.js # Handles PDF.js worker and text extraction
+│   └── useReaderEngine.js # Handles the timing and loop logic
+└── App.jsx             # Main application entry
+
+```
+
+### 📖 How to Use
+
+1. **Upload a PDF**
+   - Click **“Select PDF File”**
+   - or **drag and drop** a file into the window
+
+2. **Select Reading Mode**
+   - ⚡ **Speed Mode** → RSVP view (single/multiple words flashed)
+   - 📄 **Original Mode** → PDF layout with guided word highlighting
+
+3. **Start Reading**
+   - Press the **Play** button to begin playback
+
+4. **Customize Settings**
+   - Adjust **Words Per Minute (WPM)**
+   - Set **chunk size (1–5 words at a time)**
+   - Change **zoom level** for PDF view
+
+
+
+### 🤝 Contributing
+
+Contributions are welcome!
+
+1. **Fork** the repository
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feature/AmazingFeature
+3. **Commit you changes**
+    ```bash
+    git commit -m "Add some Amazing Feature"
+4. **Push to the branch**
+    ```bash
+    git push origin feature/AmazingFeature
+5. **Open a Pull Request**
+
+### 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+## developed by [Jay Patil](https://github.com/thisisjaypatil8)
