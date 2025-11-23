@@ -1,29 +1,37 @@
 import { useState, useEffect, useRef } from 'react';
 
-const useReaderEngine = (totalWords, wpm, chunkSize, viewMode) => {
+const useReaderEngine = (totalWords, wpm, chunkSize, viewMode, customDelays = []) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const timerRef = useRef(null);
 
   useEffect(() => {
+    let timeoutId;
+
     if (isPlaying && totalWords > 0) {
-      const interval = 60000 / wpm;
-      timerRef.current = setInterval(() => {
+      // Determine delay for the CURRENT item
+      let delay = 60000 / wpm;
+      
+      if (customDelays && customDelays.length > 0 && customDelays[currentIndex] !== undefined) {
+        delay = customDelays[currentIndex];
+      }
+
+      timeoutId = setTimeout(() => {
         setCurrentIndex(prev => {
           const step = viewMode === 'rsvp' ? chunkSize : 1;
           const next = prev + step;
+          
           if (next >= totalWords) {
             setIsPlaying(false);
-            return totalWords - 1;
+            return prev; // Stay on last item
           }
           return next;
         });
-      }, interval);
-    } else {
-      clearInterval(timerRef.current);
+      }, delay);
     }
-    return () => clearInterval(timerRef.current);
-  }, [isPlaying, wpm, chunkSize, totalWords, viewMode]);
+
+    return () => clearTimeout(timeoutId);
+  }, [isPlaying, currentIndex, wpm, chunkSize, totalWords, viewMode, customDelays]);
 
   const togglePlay = () => {
       if (currentIndex >= totalWords - 1) setCurrentIndex(0);

@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+/* Smooth sliding transition for PDF highlights */
+.pdf-highlight {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, left, top, width, height;
+}

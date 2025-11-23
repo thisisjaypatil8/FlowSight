@@ -1,7 +1,7 @@
 import React from 'react';
 import { X, RotateCcw } from 'lucide-react';
 
-const SettingsModal = ({ show, onClose, wpm, setWpm, chunkSize, setChunkSize, viewMode, onReset }) => {
+const SettingsModal = ({ show, onClose, wpm, setWpm, chunkSize, setChunkSize, viewMode, isNaturalReading, setIsNaturalReading, isAiEnhanced, setIsAiEnhanced, onReset }) => {
   if (!show) return null;
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
@@ -16,16 +16,52 @@ const SettingsModal = ({ show, onClose, wpm, setWpm, chunkSize, setChunkSize, vi
             <input type="range" min="100" max="1000" step="25" value={wpm} onChange={(e) => setWpm(Number(e.target.value))} className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
             <div className="flex justify-between text-xs text-slate-400 mt-1"><span>100</span><span>{wpm}</span><span>1000</span></div>
           </div>
+
           {viewMode === 'rsvp' && (
-            <div>
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Chunk Size</label>
-              <div className="flex space-x-2">
-                {[1, 2, 3, 4, 5].map(num => (
-                  <button key={num} onClick={() => setChunkSize(num)} className={`flex-1 py-2 rounded-md font-medium text-sm transition ${chunkSize === num ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}>{num}</button>
-                ))}
+            <>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Chunk Size</label>
+                <div className="flex space-x-2">
+                  {[1, 2, 3, 4, 5].map(num => (
+                    <button
+                      key={num}
+                      onClick={() => setChunkSize(num)}
+                      disabled={isNaturalReading}
+                      className={`flex-1 py-2 rounded-md font-medium text-sm transition ${chunkSize === num && !isNaturalReading ? 'bg-indigo-600 text-white shadow-md' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Natural Reading</label>
+                <button
+                  onClick={() => setIsNaturalReading(!isNaturalReading)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${isNaturalReading ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-700'}`}
+                >
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${isNaturalReading ? 'translate-x-6' : 'translate-x-1'}`} />
+                </button>
+              </div>
+
+              {isNaturalReading && (
+                <div className="flex items-center justify-between pl-4 border-l-2 border-indigo-100 dark:border-slate-700">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">AI Enhanced</label>
+                    <span className="text-xs text-slate-400">Smart chunking (beta)</span>
+                  </div>
+                  <button
+                    onClick={() => setIsAiEnhanced(!isAiEnhanced)}
+                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${isAiEnhanced ? 'bg-indigo-600' : 'bg-slate-200 dark:bg-slate-700'}`}
+                  >
+                    <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${isAiEnhanced ? 'translate-x-6' : 'translate-x-1'}`} />
+                  </button>
+                </div>
+              )}
+            </>
           )}
+
           <button onClick={onReset} className="w-full py-2 flex items-center justify-center space-x-2 text-slate-500 hover:text-indigo-600 transition text-sm border-t border-slate-100 dark:border-slate-700 pt-4 mt-2">
             <RotateCcw className="w-4 h-4" /><span>Reset to Defaults</span>
           </button>
